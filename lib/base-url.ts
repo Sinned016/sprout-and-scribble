@@ -1,6 +1,6 @@
 export default function getBaseURL() {
-  if (typeof window !== undefined) {
-    return null;
+  if (typeof window !== "undefined") {
+    return "";
   }
 
   if (process.env.VERCEL_URL) {
