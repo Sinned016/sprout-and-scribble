@@ -12,7 +12,6 @@ import {
 } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AuthCard from "./auth-card";
-import { RegisterSchema } from "@/types/register-schema";
 import * as z from "zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -20,83 +19,56 @@ import Link from "next/link";
 import { useAction } from "next-safe-action/hooks";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { emailRegister } from "@/server/actions/email-register";
 import FormSuccess from "./form-success";
 import FormError from "./form-error";
+import { NewPasswordSchema } from "@/types/new-password-schema";
+import { newPassword } from "@/server/actions/new-password";
+import { useSearchParams } from "next/navigation";
 
-export default function RegisterForm() {
-  const form = useForm<z.infer<typeof RegisterSchema>>({
-    resolver: zodResolver(RegisterSchema),
+export default function NewPasswordForm() {
+  const form = useForm<z.infer<typeof NewPasswordSchema>>({
+    resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
-      name: "",
-      email: "",
       password: "",
+      token: "",
     },
   });
+
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const { execute, status } = useAction(emailRegister, {
-    onSuccess({ data }: { data?: { success?: string; error?: string } }) {
-      if (data?.error) {
-        setError(data.error);
+  const { execute, status } = useAction(newPassword, {
+    onSuccess(response) {
+      const responseData = response.data;
+
+      if (responseData && typeof responseData.error === "string") {
+        setError(responseData.error);
       }
-      if (data?.success) {
-        setSuccess(data.success);
+
+      if (responseData && typeof responseData.success === "string") {
+        setSuccess(responseData.success);
       }
     },
   });
 
-  function onSubmit(values: z.infer<typeof RegisterSchema>) {
-    console.log("before server action runs");
-    execute(values);
+  function onSubmit(values: z.infer<typeof NewPasswordSchema>) {
+    execute({ password: values.password, token });
   }
 
   return (
     <AuthCard
-      cardTitle="Create an account 🎉"
+      cardTitle="Enter a new password"
       backButtonHref="/auth/login"
-      backButtonLabel="Already have an account?"
+      backButtonLabel="Back to login"
       showSocials
     >
       <div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div>
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Placeholder" type="text" />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="placeholder@gmail.com"
-                        type="email"
-                        autoComplete="email"
-                      />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <FormField
                 control={form.control}
                 name="password"
@@ -109,6 +81,7 @@ export default function RegisterForm() {
                         placeholder="**********"
                         type="password"
                         autoComplete="current-password"
+                        disabled={status === "executing"}
                       />
                     </FormControl>
                     <FormDescription />
@@ -120,7 +93,7 @@ export default function RegisterForm() {
               <FormSuccess message={success} />
               <FormError message={error} />
 
-              <Button className="px-0" size={"sm"} variant={"link"}>
+              <Button size={"sm"} variant={"link"}>
                 <Link href="/auth/reset">Forgot your password?</Link>
               </Button>
             </div>
@@ -128,11 +101,11 @@ export default function RegisterForm() {
             <Button
               type="submit"
               className={cn(
-                "w-full my-4",
+                "w-full",
                 status === "executing" ? "animate-pulse" : ""
               )}
             >
-              {"Register"}
+              {"Reset Password"}
             </Button>
           </form>
         </Form>

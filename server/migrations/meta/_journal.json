@@ -57,6 +57,20 @@
       "when": 1727875454769,
       "tag": "0007_wise_nebula",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1728380919869,
+      "tag": "0008_nice_nova",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1728907399771,
+      "tag": "0009_graceful_ser_duncan",
+      "breakpoints": true
     }
   ]
 }

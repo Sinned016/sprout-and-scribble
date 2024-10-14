@@ -63,20 +63,6 @@ body {
   }
 }
 
-@layer components {
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+[data-ut-element="button"][data-state="uploading"]::after {
+  @apply bg-primary/50;
 }
