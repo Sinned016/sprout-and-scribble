@@ -71,6 +71,13 @@
       "when": 1728907399771,
       "tag": "0009_graceful_ser_duncan",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1728995798766,
+      "tag": "0010_chunky_landau",
+      "breakpoints": true
     }
   ]
 }
