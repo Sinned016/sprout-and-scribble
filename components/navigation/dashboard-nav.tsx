@@ -16,7 +16,6 @@ type DashboardNavProps = {
 
 export default function DashboardNav({ allLinks }: DashboardNavProps) {
   const pathName = usePathname();
-  console.log(pathName);
 
   return (
     <nav className="py-2 overflow-auto">

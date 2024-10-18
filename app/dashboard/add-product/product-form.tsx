@@ -24,6 +24,10 @@ import { Input } from "@/components/ui/input";
 import { DollarSign } from "lucide-react";
 import Tiptap from "./tiptap";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAction } from "next-safe-action/hooks";
+import { createProduct } from "@/server/actions/create-product";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function ProductForm() {
   const form = useForm<zProductSchema>({
@@ -33,7 +37,38 @@ export default function ProductForm() {
       description: "",
       price: 0,
     },
+    mode: "onChange",
   });
+
+  const router = useRouter();
+
+  let loadingToastId: string | number;
+  const { execute, status } = useAction(createProduct, {
+    onSuccess: (data) => {
+      if (data.data?.success) {
+        router.push("/dashboard/products");
+        toast.success(data.data?.success);
+
+        if (loadingToastId) {
+          toast.dismiss(loadingToastId);
+        }
+      }
+      if (data.data?.error) {
+        toast.error(data.data?.error);
+
+        if (loadingToastId) {
+          toast.dismiss(loadingToastId);
+        }
+      }
+    },
+    onExecute: () => {
+      loadingToastId = toast.loading("Creating product...");
+    },
+  });
+
+  async function onSubmit(values: zProductSchema) {
+    execute(values);
+  }
 
   return (
     <Card>
@@ -43,7 +78,7 @@ export default function ProductForm() {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={() => console.log("hey")} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
               name="title"
@@ -100,7 +135,11 @@ export default function ProductForm() {
 
             <Button
               className="w-full"
-              disabled={status === "executing"}
+              disabled={
+                status === "executing" ||
+                !form.formState.isValid ||
+                !form.formState.isDirty
+              }
               type="submit"
             >
               Submit
@@ -108,9 +147,6 @@ export default function ProductForm() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter>
     </Card>
   );
 }
