@@ -5,12 +5,13 @@ import { ProductSchema } from "@/types/product-schema";
 import { db } from "..";
 import { eq } from "drizzle-orm";
 import { products } from "../schema";
+import { revalidatePath } from "next/cache";
 
 export const createProduct = actionClient
   .schema(ProductSchema)
   .action(async ({ parsedInput: { id, title, description, price } }) => {
     try {
-      // Updating already existing product
+      // Updating already existing product / Edit mode
       if (id) {
         const currentProduct = await db.query.products.findFirst({
           where: eq(products.id, id),
@@ -26,8 +27,9 @@ export const createProduct = actionClient
           .where(eq(products.id, id))
           .returning();
 
+        revalidatePath("/dashboard/products");
         return {
-          success: `Product ${editedProduct[0].title} has been created`,
+          success: `Product ${editedProduct[0].title} has been edited`,
         };
       }
 
@@ -38,9 +40,10 @@ export const createProduct = actionClient
           .values({ title, description, price })
           .returning();
 
+        revalidatePath("/dashboard/products");
         return { success: `Product ${newProduct[0].title} has been created` };
       }
-    } catch (error) {
+    } catch {
       return { error: "Failed to create a product" };
     }
   });
