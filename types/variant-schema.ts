@@ -2,7 +2,7 @@ import * as z from "zod";
 
 export const VariantSchema = z.object({
   productID: z.number(),
-  id: z.number(),
+  id: z.number().optional(),
   editMode: z.boolean(),
   productType: z
     .string()
