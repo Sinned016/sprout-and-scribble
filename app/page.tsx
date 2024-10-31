@@ -1,10 +1,24 @@
 //export const dynamic = "force-dynamic";
 //export const revalidate = 5;
 
+import Products from "@/components/products/products";
+import { db } from "@/server";
+
 export default async function Home() {
+  const data = await db.query.productVariants.findMany({
+    with: {
+      variantImages: true,
+      variantTags: true,
+      product: true,
+    },
+    orderBy: (productVariants, { desc }) => [desc(productVariants.id)],
+  });
+
+  console.log(data);
+
   return (
-    <main className="text-4xl">
-      <h1>Homepage</h1>
+    <main>
+      <Products variants={data} />
     </main>
   );
 }
