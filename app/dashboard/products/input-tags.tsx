@@ -21,7 +21,9 @@ export const InputTags = forwardRef<HTMLInputElement, InputTagsProps>(
 
     const addPendingDataPoint = () => {
       if (pendingDataPoint) {
+        // Set removes duplicate values
         const newDataPoints = new Set([...value, pendingDataPoint]);
+        // But now it isn't an array, so we convert it back
         onChange(Array.from(newDataPoints));
         setPendingDataPoint("");
       }
@@ -43,6 +45,7 @@ export const InputTags = forwardRef<HTMLInputElement, InputTagsProps>(
           <AnimatePresence>
             {value.map((tag) => (
               <motion.div
+                className="flex items-center bg-secondary rounded-xl pr-2"
                 animate={{ scale: 1 }}
                 initial={{ scale: 0 }}
                 exit={{ scale: 0 }}
@@ -50,7 +53,7 @@ export const InputTags = forwardRef<HTMLInputElement, InputTagsProps>(
               >
                 <Badge variant={"secondary"}>{tag}</Badge>
                 <button
-                  className="w-3 ml-2"
+                  className="w-3"
                   type="button"
                   onClick={() => onChange(value.filter((i) => i !== tag))}
                 >
