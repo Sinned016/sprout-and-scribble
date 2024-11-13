@@ -40,7 +40,7 @@ export default function UserButton({ user }: Session) {
     return (
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger>
-          <Avatar className="w-10 h-10">
+          <Avatar className="w-7 h-7">
             {user.image && (
               <Image src={user.image} alt={user.name!} fill={true} />
             )}
