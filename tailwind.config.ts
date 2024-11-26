@@ -24,6 +24,9 @@ const config: Config = withUt({
       minHeight: {
         "50vh": "50vh",
       },
+      height: {
+        "88": "22rem",
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
