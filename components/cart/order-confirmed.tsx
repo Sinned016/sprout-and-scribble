@@ -8,13 +8,18 @@ import { motion } from "framer-motion";
 import ConfirmedBox from "@/public/confirmed-box.json";
 
 export default function OrderConfirmed() {
-  const { setCheckoutProgress } = useCartStore();
+  const { setCheckoutProgress, setCartOpen } = useCartStore();
   return (
     <div className="flex flex-col gap-4 items-center justify-center">
       <h2 className="text-2xl font-meduim ">Thank you for your purchase!</h2>
 
       <Link href={"/dashboard/orders"}>
-        <Button onClick={() => setCheckoutProgress("cart-page")}>
+        <Button
+          onClick={() => {
+            setCheckoutProgress("cart-page");
+            setCartOpen(false);
+          }}
+        >
           View your order
         </Button>
       </Link>
