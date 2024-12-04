@@ -9,7 +9,7 @@ export default function CartMessage() {
   const { checkoutProgress, setCheckoutProgress } = useCartStore();
   return (
     <motion.div
-      className="flex flex-col items-center justify-center"
+      className="text-center"
       animate={{ opacity: 1, x: 0 }}
       initial={{ opacity: 0, x: 10 }}
     >
@@ -30,7 +30,9 @@ export default function CartMessage() {
             <ArrowLeft size={14} /> Head back to cart
           </span>
         ) : null}
-        {checkoutProgress === "confirmation-page" ? "Order Confirmed" : null}
+        {checkoutProgress === "confirmation-page"
+          ? "You will recieve an email with your receipt!"
+          : null}
       </DrawerDescription>
     </motion.div>
   );

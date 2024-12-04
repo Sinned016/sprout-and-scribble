@@ -10,6 +10,9 @@ import Stars from "./stars";
 export default function Review({ reviews }: { reviews: ReviewsWithUser[] }) {
   return (
     <motion.div className="flex flex-col gap-4">
+      {reviews.length === 0 && (
+        <p className="py-2 text-md font-medium">No reviews yet</p>
+      )}
       {reviews.map((review) => (
         <Card className="p-4" key={review.id}>
           <div className="flex gap-2 items-center">

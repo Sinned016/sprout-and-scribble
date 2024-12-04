@@ -120,6 +120,13 @@
       "when": 1732623596666,
       "tag": "0016_spooky_starfox",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1733318069734,
+      "tag": "0017_yellow_edwin_jarvis",
+      "breakpoints": true
     }
   ]
 }

@@ -38,8 +38,8 @@ export default function CartDrawer() {
           <ShoppingBag />
         </div>
       </DrawerTrigger>
-      <DrawerContent className="min-h-50vh">
-        <DrawerHeader className="flex justify-center items-center">
+      <DrawerContent className="fixed bottom-0 left-0 max-h-[70vh] min-h-[50vh]">
+        <DrawerHeader className="">
           <CartMessage />
         </DrawerHeader>
         <div className="overflow-auto p-4">
