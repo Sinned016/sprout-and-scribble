@@ -70,9 +70,6 @@ const config: Config = withUt({
           "5": "hsl(var(--chart-5))",
         },
       },
-      minHeight: {
-        "50vh": "50vh",
-      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
