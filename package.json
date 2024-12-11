@@ -58,6 +58,8 @@
     "react-dom": "^18",
     "react-hook-form": "^7.49.2",
     "react-icons": "^5.3.0",
+    "react-instantsearch": "^7.13.9",
+    "react-instantsearch-nextjs": "^0.1.14",
     "recharts": "^2.14.1",
     "resend": "^4.0.0",
     "sonner": "^1.5.0",

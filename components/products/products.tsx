@@ -5,15 +5,34 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "../ui/badge";
 import FormatPrice from "@/lib/format-price";
+import { useSearchParams } from "next/navigation";
+import { useMemo } from "react";
 
 type VariantTypes = {
   variants: VariantsWithProduct[];
 };
 
 export default function Products({ variants }: VariantTypes) {
+  const params = useSearchParams();
+  const paramTag = params.get("tag");
+
+  // Filtered version of these variants
+  // const filteredVariants = variants.filter(
+  //   (variant) => variant.productType.toLowerCase() === tag
+  // );
+
+  const filteredVariants = useMemo(() => {
+    if (paramTag && variants) {
+      return variants.filter((variant) =>
+        variant.variantTags.some((tag) => tag.tag === paramTag)
+      );
+    }
+    return variants;
+  }, [paramTag]);
+
   return (
     <main className="grid gap-12 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      {variants.map((variant) => (
+      {filteredVariants.map((variant) => (
         <Link
           className="py-2"
           href={`/products/${variant.id}?id=${variant.id}&productID=${variant.productID}&price=${variant.product.price}&title=${variant.product.title}&type=${variant.productType}&image=${variant.variantImages[0].url}`}

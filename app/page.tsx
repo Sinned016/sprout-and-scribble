@@ -1,6 +1,8 @@
 //export const dynamic = "force-dynamic";
 //export const revalidate = 5;
 
+import Algolia from "@/components/products/algolia";
+import ProductTags from "@/components/products/product-tags";
 import Products from "@/components/products/products";
 import { db } from "@/server";
 export const revalidate = 60 * 60;
@@ -19,6 +21,8 @@ export default async function Home() {
 
   return (
     <main>
+      <Algolia />
+      <ProductTags />
       <Products variants={data} />
     </main>
   );
