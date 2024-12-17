@@ -6,15 +6,24 @@ import { Card } from "../ui/card";
 import Image from "next/image";
 import { formatDistance, subDays } from "date-fns";
 import Stars from "./stars";
+import { Session } from "next-auth";
+import { Delete, DeleteIcon, Trash } from "lucide-react";
+import DeleteReview from "./delete-review";
 
-export default function Review({ reviews }: { reviews: ReviewsWithUser[] }) {
+export default function Review({
+  reviews,
+  user,
+}: {
+  reviews: ReviewsWithUser[];
+  user: any; // FIX THIS ANY
+}) {
   return (
     <motion.div className="flex flex-col gap-4">
       {reviews.length === 0 && (
         <p className="py-2 text-md font-medium">No reviews yet</p>
       )}
       {reviews.map((review) => (
-        <Card className="p-4" key={review.id}>
+        <Card className="p-4 relative" key={review.id}>
           <div className="flex gap-2 items-center">
             <Image
               className="rounded-full "
@@ -33,6 +42,7 @@ export default function Review({ reviews }: { reviews: ReviewsWithUser[] }) {
                 </p>
               </div>
             </div>
+            <DeleteReview user={user} review={review} />
           </div>
           <p className="font-meduim mt-2">{review.comment}</p>
         </Card>

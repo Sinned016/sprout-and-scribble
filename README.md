@@ -18,3 +18,9 @@
 - React Hook Form
 - Shad/CN
 - Stripe Elements
+
+## Bugs
+
+- Badge filters on homepage going outside fo the screen on phone view.
+- Users can't delete their reviews.
+- Users have to reload a product page to see their own review.
