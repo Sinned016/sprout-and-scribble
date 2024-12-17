@@ -22,5 +22,6 @@
 ## Bugs
 
 - Badge filters on homepage going outside fo the screen on phone view.
-- Users can't delete their reviews.
-- Users have to reload a product page to see their own review.
+- Doesn't seem like a mail is sent out when you register a credentials account, this worked before. Needs more testing. Users are still able to signin through Google or GitHub though.
+- Users can't delete their reviews. FIXED
+- Users have to reload a product page to see their own review. FIXED

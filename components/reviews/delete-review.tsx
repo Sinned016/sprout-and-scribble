@@ -30,12 +30,9 @@ export default function DeleteReview({
   const isAdmin = user?.role;
   const loggedInUserID = user?.id;
   const reviewUserID = review?.userID;
-  console.log(review.id);
 
   let loadingToastId: string | number;
   const deleteReviewAction = useAction(deleteReview, {
-    // revalidate page, or update page.
-    // and close the dialog
     onExecute: () => {
       loadingToastId = toast.loading("Deleting Product...");
       setOpen(false);
@@ -91,18 +88,6 @@ export default function DeleteReview({
         >
           Yes
         </Button>
-
-        {/* <Button
-            variant={"destructive"}
-            type="button"
-            disabled={variantAction.status === "executing"}
-            onClick={(e) => {
-              e.preventDefault();
-              variantAction.execute({ id: variant.id });
-            }}
-          >
-            Delete Variant
-          </Button> */}
 
         <DialogClose>
           <Button className="w-full">Cancel</Button>
