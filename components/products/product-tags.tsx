@@ -17,7 +17,7 @@ export default function ProductTags() {
     }
   };
   return (
-    <div className="my-4 flex gap-4 items-center justify-center">
+    <div className="w-full my-4 flex gap-4 items-center justify-center overflow-auto">
       <Badge
         onClick={() => setFilter("")}
         className={cn(
@@ -53,15 +53,6 @@ export default function ProductTags() {
         )}
       >
         Pink
-      </Badge>
-      <Badge
-        onClick={() => setFilter("yellow")}
-        className={cn(
-          "cursor-pointer bg-yellow-500 hover:opacity-100 hover:bg-yellow-600",
-          tag === "pink" && tag ? "opacity-100" : "opacity-50"
-        )}
-      >
-        Yellow
       </Badge>
       <Badge
         onClick={() => setFilter("orange")}
